@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+
+<!--
+	Това е демо-шаблон на първото домашно задание по ОКГ.
+	Вижте коментарите във файла, за да разберете къде да променяте.
+	
+	Разделяне/слепване на двете части на йероглифа:
+		клик с ляв бутон или клавиш "интервал"
+		
+	Показване/скриване на рамката:
+		клик с десен бутон или някой друг клавиш
+-->
+	
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="kanji.js"></script>
+	</head>
+	
+	<body onload="main()">
+		<!-- В тага h1 си напишете факултетния номер, групата в Мудъл и двете си имена-->
+		<h1>ф.н. 81523 &ndash; група 3 &ndash; Симона Петрова</h1>
+
+		<!-- В този script таг напишете кода си за създаване на
+		йероглифа в две половини, разделени с диагонална черта
+		от горе-ляво до долу-дясно. Кодът по-долу е само примерен.
+		Махнете го и сложете вашия код на негово място. -->
+		<script>
+			// Елементите, които принадлежат на горната-дясна половина
+			// на йероглифа ги добавете към обекта PART1, а елементите
+			// на долната-лява половина - в PART2.
+			
+			// Кодът по-надолу създава две стъпаловидни половини на
+			// плочка; целта е да се покаже как да използвате двата
+			// обекта PART1 и PART2 (те са създадени в kanji.js и
+			// пак от там се манипулират, затова не им променяйте
+			// имената).
+			
+			// Създаваме си материал за елементите - добре е да не
+			// е прекалено ярък или тъмен, за да се виждат добре нещата.
+            var material = new THREE.MeshPhongMaterial({ color: 'gray', shininess: 100 });
+            var extrudeSettings = { amount: 10, bevelEnabled: false };
+			
+			// Дефинираме елементите на горната-дясна половина (с имена по наш избор).
+            var leftBox = new THREE.Shape();
+
+            leftBox.moveTo(-5.03, 9.44);
+            leftBox.lineTo(-3.48, 9.44);
+            leftBox.lineTo(-3.48, 7.37);
+            leftBox.lineTo(0.37, 7.37);
+            leftBox.lineTo(0.37, 5.84);
+            leftBox.lineTo(-5.84, 5.84);
+            leftBox.lineTo(-7.37, 7.37);
+            leftBox.lineTo(-5.03, 7.37);
+            
+            var leftBoxGeometry = new THREE.ExtrudeGeometry(leftBox, extrudeSettings);
+            var leftBoxPiece = new THREE.Mesh(leftBoxGeometry, material);
+
+            var leftCurve = new THREE.Shape();
+
+            leftCurve.moveTo(-0.95, 0.95);
+            leftCurve.lineTo(0.58, 0.95);
+            leftCurve.lineTo(0.58, 2.44);
+            leftCurve.lineTo(-1.68, 2.44);
+            leftCurve.quadraticCurveTo(-1, 4, -0.65, 5.05);
+            leftCurve.lineTo(-2.11, 5.66);
+            leftCurve.quadraticCurveTo(-2.67, 3.97, -3.10, 3.10);
+
+            var leftCurveGeometry = new THREE.ExtrudeGeometry(leftCurve, extrudeSettings);
+            var leftCurvePiece = new THREE.Mesh(leftCurveGeometry, material);
+
+            var smallCurve= new THREE.Shape();
+
+            smallCurve.moveTo(2.69, -2.69);
+            smallCurve.lineTo(1.31, -1.31);
+            smallCurve.quadraticCurveTo(1.38 , -0.21,  1.33, 1.67);
+            smallCurve.lineTo(2.88, 1.67);
+            smallCurve.quadraticCurveTo(2.81, -2.25, 2.69, -2.69);
+
+            var smallCurveGeometry = new THREE.ExtrudeGeometry(smallCurve, extrudeSettings);
+            var smallCurvePiece = new THREE.Mesh(smallCurveGeometry, material);
+
+            var bottomBox = new THREE.Shape();
+
+            bottomBox.moveTo(6.91, -6.91);
+            bottomBox.lineTo(5.28, -5.28);
+            bottomBox.lineTo(5.28, 1.67);
+            bottomBox.lineTo(6.91, 1.67);
+
+            var bottomBoxGeometry = new THREE.ExtrudeGeometry(bottomBox, extrudeSettings);
+            var bottomBoxPiece = new THREE.Mesh(bottomBoxGeometry, material);
+
+            var complexBox = new THREE.Shape();
+
+            complexBox.moveTo(1.33, 1.67);
+            complexBox.lineTo(9.38, 1.67);
+            complexBox.lineTo(9.38, 3.26);
+            complexBox.lineTo(2.88, 3.26);
+            complexBox.lineTo(2.88, 6.23);
+            complexBox.quadraticCurveTo(7.18, 7.54, 8.70, 8.25);
+            complexBox.lineTo(7.69, 9.57);
+            complexBox.quadraticCurveTo(4.16, 8.07, 1.33, 7.58);
+
+
+
+
+            var complexBoxGeometry = new THREE.ExtrudeGeometry(complexBox, extrudeSettings);
+            var complexBoxPiece = new THREE.Mesh(complexBoxGeometry, material);
+
+
+
+			// Добавяме ги към обекта PART1 (името е фиксирано).
+            part1.add(leftBoxPiece, leftCurvePiece, smallCurvePiece, bottomBoxPiece, complexBoxPiece);
+			part1.position.z -= 5;
+
+			
+			
+            // Дефинираме елементите на долната-лява половина (с имена по наш избор).
+
+			var topLeftBox = new THREE.Shape();
+
+			topLeftBox.moveTo(-5.84, 5.84);
+			topLeftBox.lineTo(-7.37, 7.37);
+			topLeftBox.lineTo(-8.98, 7.37);
+			topLeftBox.lineTo(-8.98, 5.84);
+
+			var topLeftBoxGeometry = new THREE.ExtrudeGeometry(topLeftBox, extrudeSettings);
+			var topLeftBoxPiece = new THREE.Mesh(topLeftBoxGeometry, material);
+
+			var bottomRightBox = new THREE.Shape();
+
+			bottomRightBox.moveTo(6.91, -6.91);
+			bottomRightBox.lineTo(5.28, -5.28);
+			bottomRightBox.lineTo(5.28, -9.41);
+			bottomRightBox.lineTo(6.91, -9.41);
+
+			var bottomRightBoxGeometry = new THREE.ExtrudeGeometry(bottomRightBox, extrudeSettings);
+			var bottomRightBoxPiece = new THREE.Mesh(bottomRightBoxGeometry, material);
+
+			var bottomCurve = new THREE.Shape();
+
+			bottomCurve.moveTo(1.31, -1.31);
+			bottomCurve.quadraticCurveTo(1.21, -2.87, -1.02, -8.39)
+			bottomCurve.lineTo(0.28, -9.29);
+			bottomCurve.quadraticCurveTo(2.19, -5.33, 2.69, -2.69)
+
+			var bottomCurveGeometry = new THREE.ExtrudeGeometry(bottomCurve, extrudeSettings);
+			var bottomCurvePiece = new THREE.Mesh(bottomCurveGeometry, material);
+
+			var everythingElse = new THREE.Shape();
+
+			everythingElse.moveTo(-0.95, 0.95);
+			everythingElse.lineTo(-3.10, 3.10);
+			everythingElse.quadraticCurveTo(-3.29, 2.67, -3.4, 2.44);
+			everythingElse.lineTo(-4.75, 2.44);
+			everythingElse.quadraticCurveTo(-5.44, 4.26, -6.45, 5.66);
+			everythingElse.lineTo(-7.75, 5.05);
+			everythingElse.quadraticCurveTo(-6.68, 3.37, -6.37, 2.44);
+			everythingElse.lineTo(-9.23, 2.43);
+			everythingElse.lineTo(-9.23, 0.95);
+			everythingElse.lineTo(-5.05, 0.95);
+			everythingElse.lineTo(-5.05, -1.05);
+			everythingElse.lineTo(-8.68, -1.05);
+			everythingElse.lineTo(-8.68, -2.55);
+			everythingElse.lineTo(-6.07, -2.55);
+			everythingElse.quadraticCurveTo(-7.48, -4.58, -9.56, -6.28);
+			everythingElse.lineTo(-8.40, -7.49);
+			everythingElse.quadraticCurveTo(-7.08, -6.32, -5.06, -4.12);
+			everythingElse.lineTo(-5.06, -9.41);
+			everythingElse.lineTo(-3.44, -9.41);
+			everythingElse.lineTo(-3.44, -3.95);
+			everythingElse.quadraticCurveTo(-2.52, -4.58, -0.98, -6.68);
+			everythingElse.lineTo(-0.18, -5.60);
+			everythingElse.quadraticCurveTo(-0.80, -4.30, -2.55, -2.80);
+			everythingElse.lineTo(-3.44, -3.31);
+			everythingElse.lineTo(-3.44, -2.55);
+			everythingElse.lineTo(0.05, -2.55);
+			everythingElse.lineTo(0.05, -1.05);
+			everythingElse.lineTo(-3.44, -1.05);
+			everythingElse.lineTo(-3.44, 0.95);
+
+			
+
+
+			var everythingElseGeometry = new THREE.ExtrudeGeometry(everythingElse, extrudeSettings);
+			var everythingElsePiece = new THREE.Mesh(everythingElseGeometry, material);
+			
+			// Добавяме ги към обекта PART2 (името е фиксирано).
+			part2.add(topLeftBoxPiece, bottomRightBoxPiece,  bottomCurvePiece, everythingElsePiece);
+			part2.position.z -= 5;
+
+			// Файлът kanji.js се грижи да нарисува земята и двете половини
+			// на йероглифа; грижи се и раздалечаването и приближаването на
+			// тези половини; показване/скриване на рамката; звукови ефекти
+			// и потрепване. Това е само за ваша информация, ако евентуално
+			// се чудете къде се прави магията. Това май е най-подравненият
+			// коментар досега -- както отляво, така и отдясно е подравнен.
+		</script>
+	</body>
+</html>
